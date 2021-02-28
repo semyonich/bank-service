@@ -5,7 +5,6 @@ import com.pet.bankservice.exception.DataProcessingException;
 import com.pet.bankservice.repository.RoleRepository;
 import com.pet.bankservice.service.RoleService;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -20,9 +19,7 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public Role getByName(String name) {
-        Role role = new Role();
-        role.setRoleName(Role.RoleName.valueOf(name));
-        return roleRepository.findOne(Example.of(role))
+        return roleRepository.getByName(Role.RoleName.valueOf(name))
                 .orElseThrow(() -> new DataProcessingException("Unable to find Role=" + name));
     }
 }

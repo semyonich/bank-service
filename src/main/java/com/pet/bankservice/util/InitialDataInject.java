@@ -22,7 +22,7 @@ public class InitialDataInject {
 
     @PostConstruct
     public void injectData() {
-        for (Role.RoleName item :Role.RoleName.values()) {
+        for (Role.RoleName item : Role.RoleName.values()) {
             Role role = new Role();
             role.setRoleName(item);
             roleService.save(role);
