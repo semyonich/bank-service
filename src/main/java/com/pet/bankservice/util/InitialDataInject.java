@@ -8,17 +8,15 @@ import javax.annotation.PostConstruct;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
+
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
+@AllArgsConstructor
 public class InitialDataInject {
     private final UserService userService;
     private final RoleService roleService;
-
-    public InitialDataInject(UserService userService, RoleService roleService) {
-        this.userService = userService;
-        this.roleService = roleService;
-    }
 
     @PostConstruct
     public void injectData() {
