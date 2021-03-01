@@ -13,6 +13,4 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query("FROM User u INNER JOIN FETCH u.roles WHERE u.phoneNumber=?1")
     Optional<User> findByPhoneNumber(String phoneNumber);
-
-
 }
