@@ -4,11 +4,10 @@ import com.pet.bankservice.entity.Role;
 import com.pet.bankservice.entity.User;
 import com.pet.bankservice.service.RoleService;
 import com.pet.bankservice.service.UserService;
-import javax.annotation.PostConstruct;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
-
+import javax.annotation.PostConstruct;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
