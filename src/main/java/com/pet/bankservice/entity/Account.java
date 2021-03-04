@@ -1,5 +1,6 @@
 package com.pet.bankservice.entity;
 
+import java.math.BigDecimal;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -25,11 +26,12 @@ public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(unique = true)
+    @Column(unique = true, name = "account_number")
     private String accountNumber;
     @Enumerated(EnumType.STRING)
     private Currency currency;
-    private Double balance;
+    private BigDecimal balance;
+    @Column(name = "is_active")
     private Boolean isActive;
     @ManyToOne
     @ToString.Exclude

@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TransactionRepository extends JpaRepository<Transaction, Long> {
-
     @Query("FROM Transaction t WHERE t.fromAccount=?1 OR t.toAccount=?1 ORDER BY t.dateTime ASC")
     Page<Transaction> findAll(Pageable pageable, Account account);
 }

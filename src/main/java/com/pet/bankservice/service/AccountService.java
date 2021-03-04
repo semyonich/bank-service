@@ -11,6 +11,4 @@ public interface AccountService {
     Account getByAccountNumber(String accountNumber);
 
     void transferMoney(String fromAccount, String toAccount, Double amount);
-
-    Account blockAccount(String accountNumber);
 }
