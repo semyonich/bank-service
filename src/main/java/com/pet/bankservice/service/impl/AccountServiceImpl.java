@@ -55,13 +55,13 @@ public class AccountServiceImpl implements AccountService {
             BigDecimal toBalance = to.getBalance().add(convertedAmount);
             to.setBalance(toBalance);
             from.setBalance(fromBalance);
-            outcoming.setStatus("Ok");
-            incoming.setStatus("Ok");
+            outcoming.setStatus(Transaction.StatusType.OK);
+            incoming.setStatus(Transaction.StatusType.OK);
             accountRepository.save(from);
             accountRepository.save(to);
         } else {
-            outcoming.setStatus("Error");
-            incoming.setStatus("Error");
+            outcoming.setStatus(Transaction.StatusType.ERROR);
+            incoming.setStatus(Transaction.StatusType.ERROR);
         }
         transactionRepository.save(outcoming);
         transactionRepository.save(incoming);

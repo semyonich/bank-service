@@ -29,6 +29,11 @@ public class Transaction {
         OUTCOMING;
     }
 
+    public enum StatusType {
+        OK,
+        ERROR;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -43,7 +48,8 @@ public class Transaction {
     private BigDecimal amount;
     @Enumerated(EnumType.STRING)
     private TransactionType type;
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private StatusType status;
 
     @Override
     public String toString() {
