@@ -9,7 +9,6 @@ import com.pet.bankservice.service.AccountService;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -69,10 +68,5 @@ public class AccountServiceImpl implements AccountService {
         Boolean isActive = !account.getIsActive();
         account.setIsActive(isActive);
         return accountRepository.save(account);
-    }
-
-    @Override
-    public List<Transaction> getAccountHistory(Pageable pageable) {
-        return null;
     }
 }
