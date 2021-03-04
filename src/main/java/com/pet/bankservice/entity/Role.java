@@ -23,6 +23,6 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Enumerated(EnumType.STRING)
-    @Column(unique = true)
+    @Column(unique = true, name = "role_name")
     private RoleName roleName;
 }

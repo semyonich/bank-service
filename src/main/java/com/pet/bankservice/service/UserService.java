@@ -2,8 +2,6 @@ package com.pet.bankservice.service;
 
 import com.pet.bankservice.entity.User;
 
-import java.util.List;
-
 public interface UserService {
     User save(User user);
 
