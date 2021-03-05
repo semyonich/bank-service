@@ -6,7 +6,9 @@ import com.pet.bankservice.exception.DataProcessingException;
 import com.pet.bankservice.repository.AccountRepository;
 import com.pet.bankservice.repository.TransactionRepository;
 import com.pet.bankservice.service.AccountService;
+import com.pet.bankservice.service.ExchangeRateFetcher;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -16,9 +18,9 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @AllArgsConstructor
 public class AccountServiceImpl implements AccountService {
-    private static final BigDecimal CURRENCY_EXCHANGE_RATE = BigDecimal.ONE;
     private final AccountRepository accountRepository;
     private final TransactionRepository transactionRepository;
+    private final ExchangeRateFetcher exchangeRateFetcher;
 
     @Override
     public Account save(Account account) {
@@ -41,9 +43,10 @@ public class AccountServiceImpl implements AccountService {
     @Transactional
     public void transferMoney(String fromAccount, String toAccount, Double amount) {
         BigDecimal nonConvertedAmount = BigDecimal.valueOf(amount);
-        BigDecimal convertedAmount = BigDecimal.valueOf(amount).multiply(CURRENCY_EXCHANGE_RATE);
         Account from = getByAccountNumber(fromAccount);
         Account to = getByAccountNumber(toAccount);
+        BigDecimal convertedAmount = exchangeRateFetcher
+                .getAmount(from.getCurrency(), to.getCurrency(), LocalDate.now(), amount);
         Transaction outcoming = Transaction.builder().fromAccount(from).toAccount(to)
                 .amount(nonConvertedAmount).dateTime(LocalDateTime.now())
                 .type(Transaction.TransactionType.OUTCOMING).build();
