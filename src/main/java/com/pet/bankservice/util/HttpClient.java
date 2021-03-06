@@ -5,7 +5,7 @@ import com.pet.bankservice.entity.dto.CurrencyExchangeDto;
 import com.pet.bankservice.exception.ApiUnavailableException;
 import java.io.IOException;
 import java.math.BigDecimal;
-import lombok.Data;
+import lombok.AllArgsConstructor;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -14,8 +14,8 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.springframework.stereotype.Component;
 
-@Data
 @Component
+@AllArgsConstructor
 public class HttpClient {
     private final ObjectMapper objectMapper;
 
