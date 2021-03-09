@@ -6,6 +6,7 @@ import com.pet.bankservice.entity.dto.UserResponseDto;
 import com.pet.bankservice.service.RoleService;
 import com.pet.bankservice.service.UserService;
 import com.pet.bankservice.service.mapper.UserMapper;
+import io.swagger.annotations.ApiOperation;
 import javax.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -28,6 +29,7 @@ public class UserController {
     private final RoleService roleService;
     private final UserMapper mapper;
 
+    @ApiOperation(value = "Create User", notes = "Create User with USER role")
     @PostMapping
     public ResponseEntity<UserResponseDto>
                 createUser(@Valid @RequestBody UserRequestDto userRequestDto) {
@@ -38,6 +40,7 @@ public class UserController {
         return new ResponseEntity<>(responseDto, HttpStatus.CREATED);
     }
 
+    @ApiOperation(value = "Update User", notes = "Update User with userId")
     @PutMapping("/{userId}")
     public ResponseEntity<UserResponseDto>
                updateUser(@PathVariable Long userId,
@@ -50,6 +53,7 @@ public class UserController {
         return new ResponseEntity<>(responseDto, HttpStatus.ACCEPTED);
     }
 
+    @ApiOperation(value = "Get User", notes = "Retrieve info about User with userId")
     @GetMapping("/{userId}")
     public ResponseEntity<UserResponseDto> get(@PathVariable Long userId) {
         User user = userService.get(userId);
@@ -57,6 +61,7 @@ public class UserController {
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
 
+    @ApiOperation(value = "Get User", notes = "Retrieve info about User with phoneNumber")
     @GetMapping("/by-phone")
     public ResponseEntity<UserResponseDto> findByPhoneNumber(@RequestParam String phoneNumber) {
         User user = userService.findByPhoneNumber(phoneNumber);
@@ -64,6 +69,7 @@ public class UserController {
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
 
+    @ApiOperation(value = "Remove User", notes = "Remove User with userId")
     @DeleteMapping ("/{userId}")
     public ResponseEntity<String> remove(@PathVariable Long userId) {
         userService.removeById(userId);
