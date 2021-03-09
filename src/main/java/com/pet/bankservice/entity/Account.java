@@ -18,9 +18,9 @@ import lombok.ToString;
 
 @Data
 @Builder
-@Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity
 @Table(name = "accounts")
 public class Account {
     @Id
