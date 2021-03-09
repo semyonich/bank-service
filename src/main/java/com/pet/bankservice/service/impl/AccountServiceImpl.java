@@ -2,6 +2,7 @@ package com.pet.bankservice.service.impl;
 
 import com.pet.bankservice.entity.Account;
 import com.pet.bankservice.entity.Transaction;
+import com.pet.bankservice.entity.Transaction.StatusType;
 import com.pet.bankservice.exception.DataProcessingException;
 import com.pet.bankservice.repository.AccountRepository;
 import com.pet.bankservice.repository.TransactionRepository;
@@ -41,7 +42,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     @Transactional
-    public void transferMoney(String fromAccount, String toAccount, Double amount) {
+    public Transaction transferMoney(String fromAccount, String toAccount, Double amount) {
         BigDecimal nonConvertedAmount = BigDecimal.valueOf(amount);
         Account from = getByAccountNumber(fromAccount);
         Account to = getByAccountNumber(toAccount);
@@ -58,15 +59,15 @@ public class AccountServiceImpl implements AccountService {
             BigDecimal toBalance = to.getBalance().add(convertedAmount);
             to.setBalance(toBalance);
             from.setBalance(fromBalance);
-            outcoming.setStatus(Transaction.StatusType.OK);
-            incoming.setStatus(Transaction.StatusType.OK);
+            outcoming.setStatus(StatusType.OK);
+            incoming.setStatus(StatusType.OK);
             accountRepository.save(from);
             accountRepository.save(to);
         } else {
-            outcoming.setStatus(Transaction.StatusType.ERROR);
-            incoming.setStatus(Transaction.StatusType.ERROR);
+            outcoming.setStatus(StatusType.ERROR);
+            incoming.setStatus(StatusType.ERROR);
         }
-        transactionRepository.save(outcoming);
         transactionRepository.save(incoming);
+        return transactionRepository.save(outcoming);
     }
 }

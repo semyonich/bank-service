@@ -1,6 +1,7 @@
 package com.pet.bankservice.service;
 
 import com.pet.bankservice.entity.Account;
+import com.pet.bankservice.entity.Transaction;
 import java.util.List;
 
 public interface AccountService {
@@ -10,5 +11,5 @@ public interface AccountService {
 
     Account getByAccountNumber(String accountNumber);
 
-    void transferMoney(String fromAccount, String toAccount, Double amount);
+    Transaction transferMoney(String fromAccount, String toAccount, Double amount);
 }
