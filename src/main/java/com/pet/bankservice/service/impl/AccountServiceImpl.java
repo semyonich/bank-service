@@ -3,6 +3,7 @@ package com.pet.bankservice.service.impl;
 import com.pet.bankservice.entity.Account;
 import com.pet.bankservice.entity.Transaction;
 import com.pet.bankservice.entity.Transaction.StatusType;
+import com.pet.bankservice.exception.AccountIsNotActiveException;
 import com.pet.bankservice.exception.DataProcessingException;
 import com.pet.bankservice.repository.AccountRepository;
 import com.pet.bankservice.repository.TransactionRepository;
@@ -45,13 +46,19 @@ public class AccountServiceImpl implements AccountService {
     public Transaction transferMoney(String fromAccount, String toAccount, Double amount) {
         BigDecimal nonConvertedAmount = BigDecimal.valueOf(amount);
         Account from = getByAccountNumber(fromAccount);
+        if (!from.getIsActive()) {
+            throw new AccountIsNotActiveException(fromAccount + " - account is not active!");
+        }
         Account to = getByAccountNumber(toAccount);
+        if (!to.getIsActive()) {
+            throw new AccountIsNotActiveException(toAccount + " - account is not active!");
+        }
         BigDecimal convertedAmount = exchangeRateFetcher
                 .getAmount(from.getCurrency(), to.getCurrency(), LocalDate.now(), amount);
         Transaction outcoming = Transaction.builder().fromAccount(from).toAccount(to)
                 .amount(nonConvertedAmount).dateTime(LocalDateTime.now())
                 .type(Transaction.TransactionType.OUTCOMING).build();
-        Transaction incoming = Transaction.builder().fromAccount(to).toAccount(from)
+        Transaction incoming = Transaction.builder().fromAccount(from).toAccount(to)
                 .amount(convertedAmount).dateTime(LocalDateTime.now())
                 .type(Transaction.TransactionType.INCOMING).build();
         if (from.getBalance().compareTo(nonConvertedAmount) >= 0) {

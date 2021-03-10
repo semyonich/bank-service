@@ -1,5 +1,6 @@
 package com.pet.bankservice.controller;
 
+import com.pet.bankservice.exception.AccountIsNotActiveException;
 import com.pet.bankservice.exception.ApiUnavailableException;
 import com.pet.bankservice.exception.CurrencyIsNotAvailableException;
 import com.pet.bankservice.exception.DataProcessingException;
@@ -37,7 +38,8 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
     }
 
     @ExceptionHandler({SQLNonTransientException.class, ApiUnavailableException.class,
-            DataProcessingException.class, CurrencyIsNotAvailableException.class})
+            DataProcessingException.class, CurrencyIsNotAvailableException.class,
+            AccountIsNotActiveException.class})
     protected ResponseEntity<Object> handleOtherExceptions(
             Exception ex) {
         Map<String, Object> body = new LinkedHashMap<>();
