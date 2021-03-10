@@ -45,14 +45,12 @@ public class AccountServiceImpl implements AccountService {
     @Transactional
     public Transaction transferMoney(String fromAccount, String toAccount, Double amount) {
         BigDecimal nonConvertedAmount = BigDecimal.valueOf(amount);
-        Account from = getByAccountNumber(fromAccount);
-        if (!from.getIsActive()) {
-            throw new AccountIsNotActiveException(fromAccount + " - account is not active!");
-        }
-        Account to = getByAccountNumber(toAccount);
-        if (!to.getIsActive()) {
-            throw new AccountIsNotActiveException(toAccount + " - account is not active!");
-        }
+        Account from = accountRepository.getAccountByAccountNumberAndIsActiveIsTrue(fromAccount)
+                .orElseThrow(() -> new AccountIsNotActiveException(fromAccount
+                        + " - account is not active!"));
+        Account to = accountRepository.getAccountByAccountNumberAndIsActiveIsTrue(toAccount)
+                .orElseThrow(() -> new AccountIsNotActiveException(toAccount
+                        + " - account is not active!"));
         BigDecimal convertedAmount = exchangeRateFetcher
                 .getAmount(from.getCurrency(), to.getCurrency(), LocalDate.now(), amount);
         Transaction outcoming = Transaction.builder().fromAccount(from).toAccount(to)
