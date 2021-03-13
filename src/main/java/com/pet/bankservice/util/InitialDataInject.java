@@ -8,14 +8,26 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 import javax.annotation.PostConstruct;
-import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+@Slf4j
 @Component
-@AllArgsConstructor
 public class InitialDataInject {
+    @Value("${application.admin.username}")
+    private String adminPhoneNumber;
+    @Value("${application.admin.password}")
+    private String adminPassword;
+    @Value("${application.admin.fullname}")
+    private String adminFullName;
     private final UserService userService;
     private final RoleService roleService;
+
+    public InitialDataInject(UserService userService, RoleService roleService) {
+        this.userService = userService;
+        this.roleService = roleService;
+    }
 
     @PostConstruct
     public void injectData() {
@@ -25,14 +37,15 @@ public class InitialDataInject {
             roleService.save(role);
         }
         User admin = new User();
-        admin.setPassword("1234");
-        admin.setPhoneNumber("0123456789");
+        admin.setPhoneNumber(adminPhoneNumber);
+        admin.setPassword(adminPassword);
         admin.setDateOfBirth(LocalDate.now());
-        admin.setName("ADMIN ADMINOV");
+        admin.setName(adminFullName);
         Set<Role> adminRoles = new HashSet<>();
         adminRoles.add(roleService.getByName("ADMIN"));
+        adminRoles.add(roleService.getByName("USER"));
         admin.setRoles(adminRoles);
         userService.save(admin);
-        System.out.println("Data successfully injected!");
+        log.info("Roles and ADMIN credentials successfully injected!");
     }
 }
