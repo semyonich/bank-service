@@ -1,10 +1,9 @@
 package com.pet.bankservice.security.jwt;
 
+import com.pet.bankservice.entity.User;
 import java.util.Collection;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import com.pet.bankservice.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
