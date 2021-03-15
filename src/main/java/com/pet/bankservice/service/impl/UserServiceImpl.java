@@ -5,15 +5,18 @@ import com.pet.bankservice.exception.DataProcessingException;
 import com.pet.bankservice.repository.UserRepository;
 import com.pet.bankservice.service.UserService;
 import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
+    private final PasswordEncoder encoder;
 
     @Override
     public User save(User user) {
+        user.setPassword(encoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 

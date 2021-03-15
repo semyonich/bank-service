@@ -1,4 +1,6 @@
 language: java
+services:
+  - mysql
 jdk:
   - openjdk11
 script:
@@ -8,3 +10,4 @@ cache:
     - $HOME/.m2
 before_install:
   - chmod +x mvnw
+  - mysql -e 'CREATE DATABASE payment_portal;'
