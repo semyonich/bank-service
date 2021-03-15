@@ -1,9 +1,14 @@
 package com.pet.bankservice.security.jwt;
 
 import java.util.Collection;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import com.pet.bankservice.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @AllArgsConstructor
@@ -48,5 +53,16 @@ public class JwtUser implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public static JwtUser create(User user) {
+        Set<GrantedAuthority> authorities = user.getRoles().stream()
+                .map(r -> new SimpleGrantedAuthority("ROLE_" + r.getRoleName().name()))
+                .collect(Collectors.toSet());
+        return new JwtUser(user.getId(),
+                user.getPhoneNumber(),
+                user.getName(),
+                user.getPassword(),
+                authorities);
     }
 }

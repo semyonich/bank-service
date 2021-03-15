@@ -1,6 +1,5 @@
 package com.pet.bankservice.config;
 
-import com.pet.bankservice.security.jwt.JwtTokenFilter;
 import com.pet.bankservice.security.jwt.JwtTokenProvider;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @EnableWebSecurity
 @Configuration
@@ -56,8 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.PUT).hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
-                .addFilterBefore(new JwtTokenFilter(provider),
-                        UsernamePasswordAuthenticationFilter.class);
+                .apply(new JwtTokenConfig(provider));
     }
 
     @Bean

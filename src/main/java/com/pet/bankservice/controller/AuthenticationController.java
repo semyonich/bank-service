@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @AllArgsConstructor
 public class AuthenticationController {
-    private final AuthenticationManager manager;
+    private final AuthenticationManager authManager;
     private final JwtTokenProvider tokenProvider;
     private final UserService userService;
 
@@ -27,7 +27,7 @@ public class AuthenticationController {
     public ResponseEntity<LoginResponseDto> login(@RequestBody LoginRequestDto requestDto) {
         try {
             String username = requestDto.getUsername();
-            manager.authenticate(new UsernamePasswordAuthenticationToken(username,
+            authManager.authenticate(new UsernamePasswordAuthenticationToken(username,
                     requestDto.getPassword()));
             User user = userService.findByPhoneNumber(username);
             String token = tokenProvider.createToken(user);

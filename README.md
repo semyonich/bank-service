@@ -13,7 +13,7 @@ These features are realized with:
 - Java (Service layer)
 - Spring Boot 
 - Spring Security (Authentication/Authorization) with JWT
-- Swagger  <br>
+- Swagger
 
 ## How to use it
 - Download and install the 
@@ -34,7 +34,7 @@ These features are realized with:
   at first you need to get JWT with Postman. Send __POST__ request with body<br> `{
 "username": "ADMIN_PHONE_NUMBER",
 "password": "ADMIN_PASSWORD"
-}`.<br>
+}` to __URL__ `http://localhost:8080/auth`. <br>
 `Content-Type` in Headers should be `application/json`. You will get response <br>
 `{"username":"ADMIN_PHONE_NUMBER","token":YOUR_TOKEN}`.<br>
 ## Ways to test :
