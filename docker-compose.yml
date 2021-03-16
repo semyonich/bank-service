@@ -4,10 +4,12 @@ version: '3.7'
 services:
   # App backend service
   bank-service:
+    container_name: app
     # Configuration for building the docker image for the backend service
-    build:
-      context: . # Use an image built from the specified dockerfile in the `springboot-app-server` directory.
-      dockerfile: Dockerfile
+    #build:
+     # context: .
+      #dockerfile: Dockerfile
+    image: semyonich/bank-service:latest
     ports:
       - "8080:8080" # Forward the exposed port 8080 on the container to port 8080 on the host machine
     restart: on-failure
@@ -22,7 +24,8 @@ services:
 
   # Database Service (Mysql)
   db:
-    image: mysql:latest
+    container_name: db
+    image: semyonich/mysql:latest
     hostname: mysqldb
     ports:
       - "3307:3306"

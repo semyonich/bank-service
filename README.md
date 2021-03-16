@@ -14,9 +14,10 @@ These features are realized with:
 - Spring Boot 
 - Spring Security (Authentication/Authorization) with JWT
 - Swagger
+- Docker
 
 ## How to use it
-Steps 2-7 can be skipped.<br>
+Steps 1-7 can be skipped.<br>
 __1__.  Download and install the 
   [JDK](https://www.oracle.com/java/technologies/javase-downloads.html "Download JDK"),
 [Git](https://git-scm.com/downloads) and [Maven](https://maven.apache.org/download.cgi) . 
@@ -33,9 +34,11 @@ __6__. Setup values in the file "application.properties" :<br>
  + application.admin.password: *ADMIN_PASSWORD* <br>
 
 __7__. Run a project.<br>
-__8__. Or you can skip steps 2-7 and install [Docker](https://www.docker.com/products/docker-desktop) .
- Enter project dir, which contains `docker-compose.yml` and run command: `docker-compose up` <br>
-__9__. Project now is available on `http://localhost:8080`. You can send requests using [Postman](https://www.postman.com/downloads/ "Download Postman"). <br>
+__8__. Or you can skip steps 1-7 and install [Docker](https://www.docker.com/products/docker-desktop) .
+ Enter project dir in terminal and run command: `docker-compose up` . <br>
+__9__. Project now is available on `http://localhost:8080`. You can send requests using
+[Postman](https://www.postman.com/downloads/ "Download Postman") or 
+visit `http://localhost:8080/swagger-ui/`. <br>
 __10__. As apllication is secured with Spring Security and JWT authentication, 
   at first you need to get JWT with Postman. Send __POST__ request with body<br> `{
 "username": "ADMIN_PHONE_NUMBER",
