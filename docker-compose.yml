@@ -1,0 +1,47 @@
+version: '3.7'
+
+# Define services
+services:
+  # App backend service
+  bank-service:
+    # Configuration for building the docker image for the backend service
+    build:
+      context: . # Use an image built from the specified dockerfile in the `springboot-app-server` directory.
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080" # Forward the exposed port 8080 on the container to port 8080 on the host machine
+    restart: on-failure
+    depends_on:
+      - db # This service depends on mysql. Start that first.
+    environment: # Pass environment variables to the service
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysqldb/payment_portal?autoReconnect=true&maxReconnects=3
+      SPRING_DATASOURCE_USERNAME: travis
+      SPRING_DATASOURCE_PASSWORD: travis
+    networks:
+      backend:
+
+  # Database Service (Mysql)
+  db:
+    image: mysql:latest
+    hostname: mysqldb
+    ports:
+      - "3307:3306"
+    restart: on-failure
+    environment:
+      MYSQL_DATABASE: payment_portal
+      MYSQL_USER: travis
+      MYSQL_PASSWORD: travis
+      MYSQL_ROOT_PASSWORD: 1234
+    volumes:
+      - db-data:/var/lib/mysql
+    networks:
+      backend:
+
+# Volumes
+volumes:
+  db-data:
+
+# Networks
+networks:
+  backend:
+    driver: bridge

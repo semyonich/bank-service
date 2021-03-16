@@ -6,7 +6,7 @@ User has access to his accounts and money transfers. If currency of destination 
 will be converted according actual
 currency exchange rate, which is obtained from side [API](https://api.exchangerate.host).
 You can test this app through Swagger UI, 
-which is available at http://localhost:8080/swagger-ui/. 
+which is available at `http://localhost:8080/swagger-ui/`. 
 All input data is being validated.
 These features are realized with:
 - MySQL (DB layer)
@@ -16,21 +16,27 @@ These features are realized with:
 - Swagger
 
 ## How to use it
-- Download and install the 
-  [JDK](https://www.oracle.com/java/technologies/javase-downloads.html "Download JDK"). <br>
-- Download and install [MySQL Server](https://dev.mysql.com/downloads/ "Download MySQL").<br>
-- Create `payment_portal` schema in your DB and user without password.
-- Download and install IDE with Spring support. 
-  For example [IntelliJ IDEA](https://www.jetbrains.com/ru-ru/idea/download/#section=windows).
-- Open project in your IDE.
-- You can send requests using [Postman](https://www.postman.com/downloads/ "Download Postman").
-- Setup values in the file "application.properties" :<br>
-    + spring.datasource.url: jdbc:mysql://*"your_DB_URL:port"*/payment_portal
-    + spring.datasource.username: *"your_DB_username"* <br>
-    + application.admin.username: *ADMIN_PHONE_NUMBER* 
-    + application.admin.password: *ADMIN_PASSWORD*
-- Run a project
-- As apllication is secured with Spring Security and JWT authentication, 
+Steps 2-7 can be skipped.<br>
+__1__.  Download and install the 
+  [JDK](https://www.oracle.com/java/technologies/javase-downloads.html "Download JDK"),
+[Git](https://git-scm.com/downloads) and [Maven](https://maven.apache.org/download.cgi) . 
+Clone this project with command `git clone https://github.com/semyonich/bank-service.git` <br>
+__2__. Download and install [MySQL Server](https://dev.mysql.com/downloads/ "Download MySQL").<br>
+__3__. Create `payment_portal` schema in your DB and user without password.<br>
+__4__. Download and install IDE with Spring support. 
+  For example [IntelliJ IDEA](https://www.jetbrains.com/ru-ru/idea/download/#section=windows) .<br>
+__5__. Open project in your IDE.<br>
+__6__. Setup values in the file "application.properties" :<br>
+ + spring.datasource.url: jdbc:mysql://*"your_DB_URL:port"*/payment_portal 
+ + spring.datasource.username: *"your_DB_username"* <br>
+ + application.admin.username: *ADMIN_PHONE_NUMBER* 
+ + application.admin.password: *ADMIN_PASSWORD* <br>
+
+__7__. Run a project.<br>
+__8__. Or you can skip steps 2-7 and install [Docker](https://www.docker.com/products/docker-desktop) .
+ Enter project dir, which contains `docker-compose.yml` and run command: `docker-compose up` <br>
+__9__. Project now is available on `http://localhost:8080`. You can send requests using [Postman](https://www.postman.com/downloads/ "Download Postman"). <br>
+__10__. As apllication is secured with Spring Security and JWT authentication, 
   at first you need to get JWT with Postman. Send __POST__ request with body<br> `{
 "username": "ADMIN_PHONE_NUMBER",
 "password": "ADMIN_PASSWORD"
